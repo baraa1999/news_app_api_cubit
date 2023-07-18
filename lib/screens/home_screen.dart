@@ -37,7 +37,30 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         drawer: const DrawerWidget(),
-        body: Container(),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Theme.of(context).cardColor),
+                        child: const Text(
+                          'All news',
+                          style: TextStyle(
+                            fontSize: 22,
+                          ),
+                        )),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
