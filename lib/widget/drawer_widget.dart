@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    themeProvider.getDarkTheme ? Colors.white : Colors.black;
     return Drawer(
       child: Material(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -34,17 +36,24 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     ),
                   ),
                   const VerticalSpacing(20),
-                  const Flexible(child: Text('News App')),
+                  Flexible(
+                      child: Text(
+                    'News App',
+                    style: GoogleFonts.lobster(
+                      textStyle:
+                          const TextStyle(fontSize: 20, letterSpacing: 0.6),
+                    ),
+                  )),
                 ],
               ),
             ),
             const VerticalSpacing(20),
-            listTiles(
+            ListTilesWidget(
               label: "Home",
               icon: IconlyBold.home,
               fct: () {},
             ),
-            listTiles(
+            ListTilesWidget(
               label: "Bookmark",
               icon: IconlyBold.bookmark,
               fct: () {},
@@ -76,8 +85,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   }
 }
 
-class listTiles extends StatelessWidget {
-  const listTiles({
+class ListTilesWidget extends StatelessWidget {
+  const ListTilesWidget({
     super.key,
     required this.label,
     required this.fct,
