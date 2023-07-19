@@ -16,6 +16,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var newstype = NewsType.allNews;
+  int currentPageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).getColor;
@@ -87,12 +89,55 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           pageinationButtons(
-                            function: () {},
                             text: 'Prev',
+                            function: () {
+                              if (currentPageIndex == 0) {
+                                return;
+                              }
+                              setState(() {
+                                currentPageIndex -= 1;
+                              });
+                            },
+                          ),
+                          Flexible(
+                            flex: 2,
+                            child: ListView.builder(
+                                itemCount: 5,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: ((context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Material(
+                                      color: currentPageIndex == index
+                                          ? Colors.blue
+                                          : Theme.of(context).cardColor,
+                                      child: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            currentPageIndex = index;
+                                          });
+                                        },
+                                        child: Center(
+                                            child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text('${index + 1}'),
+                                        )),
+                                      ),
+                                    ),
+                                  );
+                                })),
                           ),
                           pageinationButtons(
-                            function: () {},
                             text: 'Next',
+                            function: () {
+                              if (currentPageIndex == 4) {
+                                return;
+                              }
+                              setState(() {
+                                currentPageIndex += 1;
+                              });
+                              print('$currentPageIndex index');
+                            },
                           )
                         ],
                       ),
