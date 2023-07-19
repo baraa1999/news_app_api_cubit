@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app_api_cubit/consts/vars.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
 import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
+import '../widget/article_widget.dart';
 import '../widget/drawer_widget.dart';
 import '../widget/tabs.dart';
 
@@ -157,6 +158,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: 20,
+                  itemBuilder: ((context, index) {
+                    return ArticleWidget();
+                  })),
+            )
           ]),
         ),
       ),
