@@ -7,7 +7,6 @@ class Styles {
       scaffoldBackgroundColor:
           isDarkTheme ? darkScaffoldColor : lightScaffoldColor,
       primaryColor: isDarkTheme ? darkCardColor : lightCardColor,
-      backgroundColor: isDarkTheme ? darkBackgroundColor : lightBackgroundColor,
       hintColor: isDarkTheme ? Colors.grey.shade400 : Colors.grey.shade700,
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: isDarkTheme ? Colors.white : Colors.black,
@@ -21,10 +20,15 @@ class Styles {
           ),
       cardColor: isDarkTheme ? darkCardColor : lightCardColor,
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
-      colorScheme: ThemeData().colorScheme.copyWith(
+      colorScheme: ThemeData()
+          .colorScheme
+          .copyWith(
             secondary: isDarkTheme ? darkIconsColor : lightIconsColor,
             brightness: isDarkTheme ? Brightness.dark : Brightness.light,
-          ),
+          )
+          .copyWith(
+              background:
+                  isDarkTheme ? darkBackgroundColor : lightBackgroundColor),
     );
   }
 }

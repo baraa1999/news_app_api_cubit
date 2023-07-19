@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:news_app_api_cubit/consts/vars.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/theme_provider.dart';
+import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
 import '../widget/drawer_widget.dart';
+import '../widget/tabs.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,9 +15,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var newstype = NewsType.allNews;
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).getColor;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -37,31 +39,84 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         drawer: const DrawerWidget(),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Theme.of(context).cardColor),
-                        child: const Text(
-                          'All news',
-                          style: TextStyle(
-                            fontSize: 22,
-                          ),
-                        )),
+                  TabsWidget(
+                      text: 'All news',
+                      color: newstype == NewsType.allNews
+                          ? Theme.of(context).cardColor
+                          : Colors.transparent,
+                      function: () {
+                        if (newstype == NewsType.allNews) {
+                          return 'hi';
+                        }
+                        setState(() {
+                          newstype == NewsType.allNews;
+                        });
+                      },
+                      fontSize: newstype == NewsType.allNews ? 22 : 14),
+                  const SizedBox(
+                    width: 25,
                   ),
+                  TabsWidget(
+                      text: 'Top tranding',
+                      color: newstype == NewsType.topTrending
+                          ? Theme.of(context).cardColor
+                          : Colors.transparent,
+                      function: () {
+                        if (newstype == NewsType.topTrending) {
+                          return;
+                        }
+                        setState(() {
+                          newstype == NewsType.topTrending;
+                        });
+                      },
+                      fontSize: newstype == NewsType.topTrending ? 22 : 14),
                 ],
               ),
-            ),
-          ],
+              const VerticalSpacing(10),
+              newstype == NewsType.topTrending
+                  ? Container()
+                  : SizedBox(
+                      height: kBottomNavigationBarHeight,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          pageinationButtons(
+                            function: () {},
+                            text: 'Prev',
+                          ),
+                          pageinationButtons(
+                            function: () {},
+                            text: 'Next',
+                          )
+                        ],
+                      ),
+                    ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Widget pageinationButtons(
+      {required Function function, required String text}) {
+    return ElevatedButton(
+        onPressed: () {
+          function();
+        },
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            padding: const EdgeInsets.all(6),
+            textStyle: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            )),
+        child: Text(text));
   }
 }
