@@ -9,7 +9,7 @@ class ArticlesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = Utils(context).getScreennSize;
+    Size size = Utils(context).getScreenSize;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
