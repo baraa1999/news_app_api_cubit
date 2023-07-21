@@ -1,3 +1,4 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,8 +6,10 @@ import 'package:news_app_api_cubit/consts/vars.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
 import 'package:news_app_api_cubit/widget/loading_widget.dart';
 import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
+import '../widget/article_widget.dart';
 import '../widget/drawer_widget.dart';
 import '../widget/tabs.dart';
+import '../widget/top_tranding.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String sortBy = SortByEnum.publishedAt.name;
   @override
   Widget build(BuildContext context) {
+    Size size = Utils(context).getScreenSize;
     final Color color = Utils(context).getColor;
     return SafeArea(
       child: Scaffold(
@@ -158,14 +162,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-            // Expanded(
-            //   child: ListView.builder(
-            //       itemCount: 20,
-            //       itemBuilder: (ctx, index) {
-            //         return const ArticlesWidget();
-            //       }),
-            // )
-            LoadingWidget(),
+            if (newsType == NewsType.allNews)
+              Expanded(
+                child: ListView.builder(
+                    itemCount: 20,
+                    itemBuilder: (ctx, index) {
+                      return const ArticlesWidget();
+                    }),
+              ),
+            if (newsType == NewsType.topTrending)
+              SizedBox(
+                height: size.height * 0.6,
+                child: Swiper(
+                  autoplayDelay: 8000,
+                  autoplay: true,
+                  itemWidth: size.width * 0.9,
+                  layout: SwiperLayout.STACK,
+                  viewportFraction: 0.9,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return const TopTrendingWidget();
+                  },
+                ),
+              ),
           ]),
         ),
       ),

@@ -31,8 +31,8 @@ class _LoadingWidgetState extends State<LoadingWidget> {
     return Expanded(
       child: ListView.builder(
           // you can add these 2 lines for better performance
-          // shrinkWrap: true,
-          // physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: 20,
           itemBuilder: (ctx, index) {
             return ArticlesShimmerEffectWidget(

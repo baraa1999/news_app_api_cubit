@@ -41,11 +41,12 @@ class ArticlesWidget extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: FancyShimmerImage(
-                          height: size.height * 0.12,
-                          width: size.height * 0.12,
-                          boxFit: BoxFit.fill,
-                          imageUrl:
-                              "https://techcrunch.com/wp-content/uploads/2022/01/locket-app.jpg?w=1390&crop=1"),
+                        height: size.height * 0.12,
+                        width: size.height * 0.12,
+                        boxFit: BoxFit.fill,
+                        imageUrl:
+                            "https://techcrunch.com/wp-content/uploads/2022/01/locket-app.jpg?w=1390&crop=1",
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
