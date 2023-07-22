@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -27,6 +28,12 @@ class _MyWidgetState extends State<NewDetailsWebView> {
       },
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(IconlyLight.arrowLeft2),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           iconTheme: IconThemeData(color: color),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
