@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
 
 class EmptyNewsWidget extends StatelessWidget {
-  const EmptyNewsWidget(
-      {super.key, required this.text, required this.imagePath});
+  const EmptyNewsWidget({Key? key, required this.text, required this.imagePath})
+      : super(key: key);
   final String text, imagePath;
-
   @override
   Widget build(BuildContext context) {
     Color color = Utils(context).getColor;
@@ -18,7 +17,9 @@ class EmptyNewsWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(18.0),
-            child: Image.asset(imagePath),
+            child: Image.asset(
+              imagePath,
+            ),
           ),
           Text(
             text,

@@ -4,7 +4,6 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app_api_cubit/consts/vars.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
-import 'package:news_app_api_cubit/widget/loading_widget.dart';
 import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
 import 'package:page_transition/page_transition.dart';
 import '../inner_screens/search_screen.dart';
@@ -43,17 +42,20 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: [
             IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: const SearchScreen(),
-                        inheritTheme: true,
-                        ctx: context),
-                  );
-                },
-                icon: const Icon(IconlyLight.search))
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child: const SearchScreen(),
+                      inheritTheme: true,
+                      ctx: context),
+                );
+              },
+              icon: const Icon(
+                IconlyLight.search,
+              ),
+            )
           ],
         ),
         drawer: const DrawerWidget(),
@@ -194,10 +196,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   viewportFraction: 0.9,
                   itemCount: 5,
                   itemBuilder: (context, index) {
-                    return const TopTrendingWidget();
+                    return TopTrendingWidget();
                   },
                 ),
               ),
+            //  LoadingWidget(newsType: newsType),
           ]),
         ),
       ),
@@ -229,8 +232,8 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Text(text),
       style: ElevatedButton.styleFrom(
-          primary: Colors.blue,
-          padding: EdgeInsets.all(6),
+          backgroundColor: Colors.blue,
+          padding: const EdgeInsets.all(6),
           textStyle:
               const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
     );

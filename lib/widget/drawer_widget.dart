@@ -5,6 +5,7 @@ import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import '../inner_screens/bookmarkes_screen.dart';
 import '../inner_screens/search_screen.dart';
 import '../providers/theme_provider.dart';
 
@@ -63,7 +64,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   context,
                   PageTransition(
                       type: PageTransitionType.rightToLeft,
-                      child: const SearchScreen(),
+                      child: const BookmarkScreen(),
                       inheritTheme: true,
                       ctx: context),
                 );
