@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../widget/vertical_spacing.dart';
@@ -126,7 +127,13 @@ class _NewsDetailsWebViewState extends State<NewsDetailsWebView> {
                 ListTile(
                   leading: const Icon(Icons.share),
                   title: const Text('Share'),
-                  onTap: () {},
+                  onTap: () async {
+                    try {
+                      Share.share('url', subject: 'Look what I made!');
+                    } catch (err) {
+                      log(err.toString());
+                    }
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.open_in_browser),
