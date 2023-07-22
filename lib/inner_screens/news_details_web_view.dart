@@ -3,16 +3,18 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class NewDetailsWebView extends StatefulWidget {
-  const NewDetailsWebView({super.key});
+import '../widget/vertical_spacing.dart';
+
+class NewsDetailsWebView extends StatefulWidget {
+  const NewsDetailsWebView({Key? key}) : super(key: key);
 
   @override
-  State<NewDetailsWebView> createState() => _MyWidgetState();
+  State<NewsDetailsWebView> createState() => _NewsDetailsWebViewState();
 }
 
-class _MyWidgetState extends State<NewDetailsWebView> {
+class _NewsDetailsWebViewState extends State<NewsDetailsWebView> {
   late WebViewController _webViewController;
-  double _progress = 0;
+  double _progress = 0.0;
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).getColor;
@@ -28,22 +30,30 @@ class _MyWidgetState extends State<NewDetailsWebView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(IconlyLight.arrowLeft2),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          iconTheme: IconThemeData(color: color),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            "URL",
-            style: TextStyle(color: color),
-          ),
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz))],
-        ),
+            leading: IconButton(
+              icon: const Icon(IconlyLight.arrowLeft2),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            iconTheme: IconThemeData(color: color),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            elevation: 0,
+            centerTitle: true,
+            title: Text(
+              "URL",
+              style: TextStyle(color: color),
+            ),
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  await _showModalSheetFct();
+                },
+                icon: const Icon(
+                  Icons.more_horiz,
+                ),
+              ),
+            ]),
         body: Column(
           children: [
             LinearProgressIndicator(
@@ -70,5 +80,65 @@ class _MyWidgetState extends State<NewDetailsWebView> {
         ),
       ),
     );
+  }
+
+  Future<void> _showModalSheetFct() async {
+    await showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(20),
+          ),
+        ),
+        context: context,
+        builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const VerticalSpacing(20),
+                Center(
+                  child: Container(
+                    height: 5,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
+                const VerticalSpacing(20),
+                const Text(
+                  'More option',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                ),
+                const Divider(
+                  thickness: 2,
+                ),
+                const VerticalSpacing(20),
+                ListTile(
+                  leading: const Icon(Icons.share),
+                  title: const Text('Share'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.open_in_browser),
+                  title: const Text('Open in browser'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.refresh),
+                  title: const Text('Refresch'),
+                  onTap: () {},
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
