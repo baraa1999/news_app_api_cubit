@@ -120,7 +120,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               const EmptyNewsWidget(
                   text: "Ops! No result found",
-                  imagePath: 'assets\images\search.png')
+                  imagePath: 'assets/images/search.png')
             ],
           ),
         ),
