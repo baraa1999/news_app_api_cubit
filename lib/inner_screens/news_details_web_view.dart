@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../services/global_methode.dart';
 import '../widget/vertical_spacing.dart';
 
 class NewsDetailsWebView extends StatefulWidget {
@@ -18,6 +20,8 @@ class NewsDetailsWebView extends StatefulWidget {
 class _NewsDetailsWebViewState extends State<NewsDetailsWebView> {
   late WebViewController _webViewController;
   double _progress = 0.0;
+  final url =
+      "https://techcrunch.com/2022/06/17/marc-lores-food-delivery-startup-wonder-raises-350m-3-5b-valuation/";
   @override
   Widget build(BuildContext context) {
     final Color color = Utils(context).getColor;
@@ -66,8 +70,7 @@ class _NewsDetailsWebViewState extends State<NewsDetailsWebView> {
             ),
             Expanded(
               child: WebView(
-                initialUrl:
-                    "https://techcrunch.com/2022/06/17/marc-lores-food-delivery-startup-wonder-raises-350m-3-5b-valuation/",
+                initialUrl: url,
                 zoomEnabled: true,
                 onProgress: (progress) {
                   setState(() {
@@ -120,6 +123,7 @@ class _NewsDetailsWebViewState extends State<NewsDetailsWebView> {
                   'More option',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
                 ),
+                const VerticalSpacing(20),
                 const Divider(
                   thickness: 2,
                 ),
@@ -129,25 +133,30 @@ class _NewsDetailsWebViewState extends State<NewsDetailsWebView> {
                   title: const Text('Share'),
                   onTap: () async {
                     try {
-                      Share.share('url', subject: 'Look what I made!');
+                      await Share.share('url', subject: 'Look what I made!');
                     } catch (err) {
-                      log(err.toString());
+                      GlobalMethods.errorDialog(
+                          errorMessage: err.toString(), context: context);
                     }
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.open_in_browser),
                   title: const Text('Open in browser'),
-                  onTap: () {},
+                  onTap: () async {
+                    if (!await launchUrl(Uri.parse(url))) {
+                      throw 'Could not launch $url';
+                    }
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.refresh),
-                  title: const Text('Refresch'),
+                  title: const Text('Refresh'),
                   onTap: () async {
                     try {
                       await _webViewController.reload();
                     } catch (err) {
-                      log('error ocurred $err');
+                      log("error occured $err");
                     } finally {
                       Navigator.pop(context);
                     }
