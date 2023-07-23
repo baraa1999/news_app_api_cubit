@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -11,6 +13,7 @@ import '../widget/article_widget.dart';
 import '../widget/drawer_widget.dart';
 import '../widget/tabs.dart';
 import '../widget/top_tranding.dart';
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,6 +26,21 @@ class _HomeScreenState extends State<HomeScreen> {
   var newsType = NewsType.allNews;
   int currentPageIndex = 0;
   String sortBy = SortByEnum.publishedAt.name;
+
+  Future<void> getNews() async {
+    var url = Uri.parse(
+        'https://newsapi.org/v2/everything?q=bitcoin&apiKey=84a442d2ffca4e85832a4b68696ee890');
+    var response = await http.get(url);
+    // print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+
+  @override
+  void didChangeDependencies() {
+    getNews();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = Utils(context).getScreenSize;
@@ -232,8 +250,8 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Text(text),
       style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blue,
-          padding: const EdgeInsets.all(6),
+          primary: Colors.blue,
+          padding: EdgeInsets.all(6),
           textStyle:
               const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
     );

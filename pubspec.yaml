@@ -47,6 +47,9 @@ dependencies:
   webview_flutter: ^3.0.4
   share_plus: ^7.0.2
   url_launcher: ^6.1.12
+  ## Rest Api
+  http: ^1.1.0
+
 
 
 
