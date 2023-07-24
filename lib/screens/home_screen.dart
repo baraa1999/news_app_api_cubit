@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app_api_cubit/consts/vars.dart';
+import 'package:news_app_api_cubit/services/news_api.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
 import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
 import 'package:page_transition/page_transition.dart';
@@ -27,17 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
   String sortBy = SortByEnum.publishedAt.name;
 
-  Future<void> getNews() async {
-    var url = Uri.parse(
-        'https://newsapi.org/v2/everything?q=bitcoin&apiKey=84a442d2ffca4e85832a4b68696ee890');
-    var response = await http.get(url);
-    // print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-  }
-
   @override
   void didChangeDependencies() {
-    getNews();
+    NewsAPiServices.getAllNews();
     super.didChangeDependencies();
   }
 
