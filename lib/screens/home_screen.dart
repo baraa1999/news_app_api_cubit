@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app_api_cubit/consts/vars.dart';
+import 'package:news_app_api_cubit/models/news_model.dart';
 import 'package:news_app_api_cubit/services/news_api.dart';
 import 'package:news_app_api_cubit/services/utils.dart';
 import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
@@ -27,11 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
   var newsType = NewsType.allNews;
   int currentPageIndex = 0;
   String sortBy = SortByEnum.publishedAt.name;
-
+  List<NewsModel> newsList = [];
   @override
   void didChangeDependencies() {
-    NewsAPiServices.getAllNews();
+    getNewsList();
     super.didChangeDependencies();
+  }
+
+  Future<void> getNewsList() async {
+    newsList = await NewsAPiServices.getAllNews();
+    setState(() {});
   }
 
   @override
@@ -191,9 +197,11 @@ class _HomeScreenState extends State<HomeScreen> {
             if (newsType == NewsType.allNews)
               Expanded(
                 child: ListView.builder(
-                    itemCount: 20,
+                    itemCount: newsList.length,
                     itemBuilder: (ctx, index) {
-                      return const ArticlesWidget();
+                      return ArticlesWidget(
+                        imageUrl: newsList[index].urlToImage,
+                      );
                     }),
               ),
             if (newsType == NewsType.topTrending)

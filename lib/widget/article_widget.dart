@@ -9,7 +9,8 @@ import 'package:page_transition/page_transition.dart';
 import '../inner_screens/bookmarkes_screen.dart';
 
 class ArticlesWidget extends StatelessWidget {
-  const ArticlesWidget({Key? key}) : super(key: key);
+  const ArticlesWidget({Key? key, required this.imageUrl}) : super(key: key);
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +49,9 @@ class ArticlesWidget extends StatelessWidget {
                         height: size.height * 0.12,
                         width: size.height * 0.12,
                         boxFit: BoxFit.fill,
-                        imageUrl:
-                            "https://techcrunch.com/wp-content/uploads/2022/01/locket-app.jpg?w=1390&crop=1",
+                        errorWidget:
+                            Image.asset('assets/images/empty_image.png'),
+                        imageUrl: imageUrl,
                       ),
                     ),
                     const SizedBox(
