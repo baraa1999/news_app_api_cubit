@@ -49,6 +49,10 @@ dependencies:
   url_launcher: ^6.1.12
   ## Rest Api
   http: ^1.1.0
+  reading_time: ^2.0.0
+  intl: ^0.18.1
+
+
 
 
 
