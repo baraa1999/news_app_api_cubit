@@ -6,7 +6,7 @@ import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LoadingWidget extends StatefulWidget {
-  const LoadingWidget({Key? key}) : super(key: key);
+  const LoadingWidget({Key? key, required NewsType newsType}) : super(key: key);
 
   @override
   State<LoadingWidget> createState() => _LoadingWidgetState();
