@@ -28,7 +28,8 @@ class ArticlesWidget extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             // Navigate to the in app details screen
-            Navigator.pushNamed(context, NewsDetailsScreen.routeName);
+            Navigator.pushNamed(context, NewsDetailsScreen.routeName,
+                arguments: newsModelProvider.publishedAt);
           },
           child: Stack(
             children: [

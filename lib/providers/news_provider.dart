@@ -14,4 +14,9 @@ class NewsProvider with ChangeNotifier {
     newList = await NewsAPiServices.getAllNews(page: pageIndex, sortBy: sortBy);
     return newList;
   }
+
+  NewsModel findByDate({required String publishedAt}) {
+    return newList
+        .firstWhere((newsModel) => newsModel.publishedAt == publishedAt);
+  }
 }
