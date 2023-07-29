@@ -1,22 +1,28 @@
 import 'dart:developer';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+
 import '../consts/vars.dart';
 import '../inner_screens/search_screen.dart';
 import '../models/news_model.dart';
 import '../providers/news_provider.dart';
+import '../providers/theme_provider.dart';
+import '../services/news_api.dart';
 import '../services/utils.dart';
-import '../widget/articles_widget.dart';
-import '../widget/drawer_widget.dart';
-import '../widget/empty_screen.dart';
-import '../widget/loading_widget.dart';
-import '../widget/tabs.dart';
-import '../widget/top_tending.dart';
-import '../widget/vertical_spacing.dart';
+import '../widgets/articles_widget.dart';
+import '../widgets/drawer_widget.dart';
+import '../widgets/empty_screen.dart';
+import '../widgets/loading_widget.dart';
+import '../widgets/tabs.dart';
+import '../widgets/top_tending.dart';
+import '../widgets/vertical_spacing.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -34,8 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     Size size = Utils(context).getScreenSize;
     final Color color = Utils(context).getColor;
-    final newsProvider = Provider.of<NewsProvider>(context);
-
+    final newsProvider = Provider.of<NewsProvider>(
+      context,
+    );
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -191,8 +198,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
             FutureBuilder<List<NewsModel>>(
-                future: newsProvider.fetchAllNews(
-                    pageIndex: currentPageIndex + 1, sortBy: sortBy),
+                future: newsType == NewsType.topTrending
+                    ? newsProvider.fetchTopHeadlines()
+                    : newsProvider.fetchAllNews(
+                        pageIndex: currentPageIndex + 1, sortBy: sortBy),
                 builder: ((context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return newsType == NewsType.allNews
@@ -223,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return ChangeNotifierProvider.value(
                                   value: snapshot.data![index],
                                   child: const ArticlesWidget(
-                                      // imageUrl: snapshot.data![index].urlToImage,
+                                      // imageUrl: snapshot.data![index].,
                                       // dateToShow: snapshot.data![index].dateToShow,
                                       // readingTime:
                                       //     snapshot.data![index].readingTimeText,
@@ -243,8 +252,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             viewportFraction: 0.9,
                             itemCount: 5,
                             itemBuilder: (context, index) {
-                              return TopTrendingWidget(
-                                url: snapshot.data![index].url,
+                              return ChangeNotifierProvider.value(
+                                value: snapshot.data![index],
+                                child: const TopTrendingWidget(
+                                    // url: snapshot.data![index].url,
+                                    ),
                               );
                             },
                           ),

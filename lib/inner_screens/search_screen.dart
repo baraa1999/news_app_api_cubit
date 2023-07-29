@@ -6,8 +6,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../consts/vars.dart';
 import '../services/utils.dart';
-import '../widget/empty_screen.dart';
-import '../widget/vertical_spacing.dart';
+import '../widgets/empty_screen.dart';
+import '../widgets/vertical_spacing.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);

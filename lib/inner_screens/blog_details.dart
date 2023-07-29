@@ -2,12 +2,14 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:news_app_api_cubit/providers/news_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../consts/styles.dart';
+import '../providers/news_provider.dart';
+import '../services/global_methods.dart';
 import '../services/utils.dart';
-import '../widget/vertical_spacing.dart';
+import '../widgets/vertical_spacing.dart';
 
 class NewsDetailsScreen extends StatefulWidget {
   static const routeName = "/NewsDetailsScreen";
@@ -24,7 +26,6 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
     final newsProvider = Provider.of<NewsProvider>(context);
     final publishedAt = ModalRoute.of(context)!.settings.arguments as String;
     final currentNews = newsProvider.findByDate(publishedAt: publishedAt);
-
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: color),
@@ -97,7 +98,15 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () async {
+                          try {
+                            await Share.share(currentNews.url,
+                                subject: 'Look what I made!');
+                          } catch (err) {
+                            GlobalMethods.errorDialog(
+                                errorMessage: err.toString(), context: context);
+                          }
+                        },
                         child: Card(
                           elevation: 10,
                           shape: const CircleBorder(),

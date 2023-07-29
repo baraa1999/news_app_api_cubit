@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +11,6 @@ class Utils {
   bool get getTheme => Provider.of<ThemeProvider>(context).getDarkTheme;
   Color get getColor => getTheme ? Colors.white : Colors.black;
 
-  
   Color get baseShimmerColor =>
       getTheme ? Colors.grey.shade500 : Colors.grey.shade200;
 

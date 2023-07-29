@@ -8,7 +8,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../services/global_methods.dart';
 import '../services/utils.dart';
-import '../widget/vertical_spacing.dart';
+import '../widgets/vertical_spacing.dart';
 
 class NewsDetailsWebView extends StatefulWidget {
   const NewsDetailsWebView({Key? key, required this.url}) : super(key: key);
@@ -132,7 +132,8 @@ class _NewsDetailsWebViewState extends State<NewsDetailsWebView> {
                   title: const Text('Share'),
                   onTap: () async {
                     try {
-                      await Share.share(widget.url, subject: 'Look what I made!');
+                      await Share.share(widget.url,
+                          subject: 'Look what I made!');
                     } catch (err) {
                       GlobalMethods.errorDialog(
                           errorMessage: err.toString(), context: context);

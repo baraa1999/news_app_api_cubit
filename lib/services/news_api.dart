@@ -1,9 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:http/http.dart' as http;
-import 'package:news_app_api_cubit/consts/vars.dart';
-
 import '../consts/api_consts.dart';
 import '../consts/http_exceptions.dart';
 import '../models/news_model.dart';
@@ -21,9 +18,37 @@ class NewsAPiServices {
         "pageSize": "5",
         "domains": "techcrunch.com",
         "page": page.toString(),
-        'sortBy': sortBy
-
+        "sortBy": sortBy
         // "apiKEY": API_KEY
+      });
+      var response = await http.get(
+        uri,
+        headers: {"X-Api-key": API_KEY},
+      );
+      log('Response status: ${response.statusCode}');
+      // log('Response body: ${response.body}');
+      Map data = jsonDecode(response.body);
+      List newsTempList = [];
+
+      if (data['code'] != null) {
+        throw HttpException(data['code']);
+        // throw data['message'];
+      }
+      for (var v in data["articles"]) {
+        newsTempList.add(v);
+        // log(v.toString());
+        // print(data["articles"].length.toString());
+      }
+      return NewsModel.newsFromSnapshot(newsTempList);
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
+  static Future<List<NewsModel>> getTopHeadlines() async {
+    try {
+      var uri = Uri.https(BASEURL, "v2/top-headlines", {
+        'country': 'us',
       });
       var response = await http.get(
         uri,
