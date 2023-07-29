@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-import '../inner_screens/bookmarkes_screen.dart';
-import '../inner_screens/search_screen.dart';
+import '../inner_screens/bookmarks_screen.dart';
 import '../providers/theme_provider.dart';
+import 'vertical_spacing.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-
+ 
     return Drawer(
       child: Material(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -60,7 +61,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               label: "Bookmark",
               icon: IconlyBold.bookmark,
               fct: () {
-                Navigator.push(
+                  Navigator.push(
                   context,
                   PageTransition(
                       type: PageTransitionType.rightToLeft,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:news_app_api_cubit/consts/vars.dart';
-import 'package:news_app_api_cubit/services/utils.dart';
-import 'package:news_app_api_cubit/widget/impty_screen.dart';
-import 'package:news_app_api_cubit/widget/vertical_spacing.dart';
+
+import '../consts/vars.dart';
+import '../services/utils.dart';
+import '../widget/empty_screen.dart';
+import '../widget/vertical_spacing.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);

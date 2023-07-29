@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 //Screens
+import 'inner_screens/blog_details.dart';
 import 'screens/home_screen.dart';
 
 //Consts
@@ -52,10 +53,12 @@ class _MyAppState extends State<MyApp> {
           Consumer<ThemeProvider>(builder: (context, themeChangeProvider, ch) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Blog',
+          title: 'News app',
           theme: Styles.themeData(themeChangeProvider.getDarkTheme, context),
           home: const HomeScreen(),
-          routes: {},
+          routes: {
+            NewsDetailsScreen.routeName: (ctx) => const NewsDetailsScreen(),
+          },
         );
       }),
     );

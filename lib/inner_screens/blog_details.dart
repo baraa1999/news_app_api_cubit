@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../consts/vars.dart';
+import '../consts/styles.dart';
 import '../services/utils.dart';
 import '../widget/vertical_spacing.dart';
 
@@ -51,7 +51,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                 Text(
                   "Title" * 10,
                   textAlign: TextAlign.justify,
-                  // style: titleTextStyle,
+                  style: titleTextStyle,
                 ),
                 const VerticalSpacing(25),
                 Row(

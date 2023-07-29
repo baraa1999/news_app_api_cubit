@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 enum NewsType {
   topTrending,
@@ -12,15 +10,14 @@ enum SortByEnum {
   publishedAt, // newest articles come first.
 }
 
-TextStyle smallTextStyle = GoogleFonts.montserrat(fontSize: 15);
 const List<String> searchKeywords = [
   "Football",
   "Flutter",
   "Python",
-  "weather",
-  "crypto",
+  "Weather",
+  "Crypto",
   "Bitcoin",
   "Youtube",
-  "Netflex",
+  "Netflix",
   "Meta"
 ];

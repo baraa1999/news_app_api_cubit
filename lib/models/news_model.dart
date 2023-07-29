@@ -1,5 +1,6 @@
-import 'package:news_app_api_cubit/services/global_methode.dart';
 import 'package:reading_time/reading_time.dart';
+
+import '../services/global_methods.dart';
 
 class NewsModel {
   String newsId,
@@ -32,12 +33,11 @@ class NewsModel {
     String title = json["title"] ?? "";
     String content = json["content"] ?? "";
     String description = json["description"] ?? "";
+
     String dateToShow = "";
     if (json["publishedAt"] != null) {
       dateToShow = GlobalMethods.formattedDateText(json["publishedAt"]);
-      GlobalMethods.formattedDateText(json["publishedAt"]);
     }
-
     return NewsModel(
       newsId: json["source"]["id"] ?? "",
       sourceName: json["source"]["name"] ?? "",
@@ -50,7 +50,7 @@ class NewsModel {
       publishedAt: json["publishedAt"] ?? "",
       content: content,
       dateToShow: dateToShow,
-      readingTimeText: readingTime(title + description + content * 50).msg,
+      readingTimeText: readingTime(title + description + content).msg,
     );
   }
 
@@ -75,4 +75,9 @@ class NewsModel {
     data["readingTimeText"] = readingTimeText;
     return data;
   }
+
+  // @override
+  // String toString() {
+  //   return "news {newid: $newsId}";
+  // }
 }

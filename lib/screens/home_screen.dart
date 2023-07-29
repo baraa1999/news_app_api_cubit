@@ -1,25 +1,20 @@
 import 'dart:developer';
-
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 import '../consts/vars.dart';
 import '../inner_screens/search_screen.dart';
 import '../models/news_model.dart';
-import '../providers/theme_provider.dart';
 import '../services/news_api.dart';
 import '../services/utils.dart';
-import '../widget/article_widget.dart';
+import '../widget/articles_widget.dart';
 import '../widget/drawer_widget.dart';
-import '../widget/impty_screen.dart';
+import '../widget/empty_screen.dart';
 import '../widget/loading_widget.dart';
 import '../widget/tabs.dart';
-import '../widget/top_tranding.dart';
+import '../widget/top_tending.dart';
 import '../widget/vertical_spacing.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,17 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   var newsType = NewsType.allNews;
   int currentPageIndex = 0;
   String sortBy = SortByEnum.publishedAt.name;
-
-  @override
-  void didChangeDependencies() {
-    getNewsList();
-    super.didChangeDependencies();
-  }
-
-  Future<List<NewsModel>> getNewsList() async {
-    List<NewsModel> newsList = await NewsAPiServices.getAllNews();
-    return newsList;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
             FutureBuilder<List<NewsModel>>(
-                future: getNewsList(),
+                future: NewsAPiServices.getAllNews(),
                 builder: ((context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return newsType == NewsType.allNews
