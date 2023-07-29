@@ -9,7 +9,6 @@ import '../consts/vars.dart';
 import '../inner_screens/search_screen.dart';
 import '../models/news_model.dart';
 import '../providers/news_provider.dart';
-import '../services/news_api.dart';
 import '../services/utils.dart';
 import '../widget/articles_widget.dart';
 import '../widget/drawer_widget.dart';
@@ -183,12 +182,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: DropdownButton(
                             value: sortBy,
                             items: dropDownItems,
-                            onChanged: (String? value) {}),
+                            onChanged: (String? value) {
+                              setState(() {
+                                sortBy = value!;
+                              });
+                            }),
                       ),
                     ),
                   ),
             FutureBuilder<List<NewsModel>>(
-                future: newsProvider.fetchAllNews(),
+                future: newsProvider.fetchAllNews(
+                    pageIndex: currentPageIndex + 1, sortBy: sortBy),
                 builder: ((context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return newsType == NewsType.allNews

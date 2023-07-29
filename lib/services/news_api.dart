@@ -1,15 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
 
-
 import 'package:http/http.dart' as http;
+import 'package:news_app_api_cubit/consts/vars.dart';
 
 import '../consts/api_consts.dart';
 import '../consts/http_exceptions.dart';
 import '../models/news_model.dart';
 
 class NewsAPiServices {
-  static Future<List<NewsModel>> getAllNews() async {
+  static Future<List<NewsModel>> getAllNews(
+      {required int page, required String sortBy}) async {
     //
     // var url = Uri.parse(
     //     'https://newsapi.org/v2/everything?q=bitcoin&pageSize=5&apiKey=');
@@ -18,7 +19,9 @@ class NewsAPiServices {
       var uri = Uri.https(BASEURL, "v2/everything", {
         "q": "bitcoin",
         "pageSize": "5",
-        "domains": "techcrunch.com"
+        "domains": "techcrunch.com",
+        "page": page.toString(),
+        'sortBy': sortBy
 
         // "apiKEY": API_KEY
       });
@@ -39,7 +42,6 @@ class NewsAPiServices {
         newsTempList.add(v);
         // log(v.toString());
         // print(data["articles"].length.toString());
-
       }
       return NewsModel.newsFromSnapshot(newsTempList);
     } catch (error) {
