@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+
 import '../inner_screens/blog_details.dart';
 import '../inner_screens/news_details_webview.dart';
 import '../models/news_model.dart';
@@ -23,8 +24,7 @@ class TopTrendingWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, NewsDetailsScreen.routeName,
-                arguments: newsModelProvider.publishedAt);
+            Navigator.pushNamed(context, NewsDetailsScreen.routeName, arguments: newsModelProvider.publishedAt);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

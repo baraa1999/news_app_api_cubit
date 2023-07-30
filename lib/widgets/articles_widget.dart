@@ -3,6 +3,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:news_app_api_cubit/widgets/vertical_spacing.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+
 import '../consts/styles.dart';
 import '../inner_screens/blog_details.dart';
 import '../inner_screens/news_details_webview.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reading_time/reading_time.dart';
+
 import '../services/global_methods.dart';
 
 class NewsModel with ChangeNotifier {

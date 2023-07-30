@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:news_app_api_cubit/models/news_model.dart';
 import 'package:provider/provider.dart';
+
 import '../consts/vars.dart';
+import '../models/news_model.dart';
 import '../providers/news_provider.dart';
 import '../services/utils.dart';
 import '../widgets/articles_widget.dart';
@@ -29,7 +30,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   List<NewsModel>? searchList = [];
   bool isSearching = false;
-
   @override
   void dispose() {
     if (mounted) {
@@ -44,7 +44,6 @@ class _SearchScreenState extends State<SearchScreen> {
     Size size = Utils(context).getScreenSize;
     final Color color = Utils(context).getColor;
     final newsProvider = Provider.of<NewsProvider>(context);
-
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -75,10 +74,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     textInputAction: TextInputAction.search,
                     keyboardType: TextInputType.text,
                     onEditingComplete: () async {
-                      searchList = await newsProvider.searchNewsProvider(
-                          query: _searchTextController.text);
+                      searchList = (await newsProvider.searchNewsProvider(
+                              query: _searchTextController.text))
+                          .cast<NewsModel>();
                       isSearching = true;
-                      focusNode.unfocus;
+                      focusNode.unfocus();
                       setState(() {});
                     },
                     decoration: InputDecoration(
@@ -95,8 +95,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             _searchTextController.clear();
                             focusNode.unfocus();
                             isSearching = false;
-                            // searchList = [];
-                            searchList!.clear;
+                            // searchList =[];
+                            searchList!.clear();
                             setState(() {});
                           },
                           child: const Icon(
@@ -111,41 +111,45 @@ class _SearchScreenState extends State<SearchScreen> {
                 ],
               ),
             ),
-            if (!isSearching && searchList!.isEmpty) const VerticalSpacing(10),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MasonryGridView.count(
-                  itemCount: searchKeywords.length,
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () async {
-                        searchList = await newsProvider.searchNewsProvider(
-                            query: _searchTextController.text);
-                        isSearching = true;
-                        focusNode.unfocus;
-                        _searchTextController = searchKeywords[index];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: const EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: color),
-                              borderRadius: BorderRadius.circular(30)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
+            const VerticalSpacing(10),
+            if (!isSearching && searchList!.isEmpty)
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MasonryGridView.count(
+                    itemCount: searchKeywords.length,
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () async {
+                          searchList = (await newsProvider.searchNewsProvider(
+                                  query: _searchTextController.text))
+                              .cast<NewsModel>();
+                          isSearching = true;
+                          focusNode.unfocus();
+                          _searchTextController.text = searchKeywords[index];
+                          setState(() {});
+                        },
+                        child: Container(
+                            margin: const EdgeInsets.all(4.0),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: color),
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
                                 child: FittedBox(
-                                    child: Text(searchKeywords[index]))),
-                          )),
-                    );
-                  },
+                                  child: Text(searchKeywords[index]),
+                                ),
+                              ),
+                            )),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
             if (isSearching && searchList!.isEmpty)
               const Expanded(
                 child: EmptyNewsWidget(
@@ -163,7 +167,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         child: const ArticlesWidget(),
                       );
                     }),
-              )
+              ),
           ],
         )),
       ),

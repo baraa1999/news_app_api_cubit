@@ -25,7 +25,7 @@ class NewsAPiServices {
         uri,
         headers: {"X-Api-key": API_KEY},
       );
-      log('Response status: ${response.statusCode}');
+      // log('Response status: ${response.statusCode}');
       // log('Response body: ${response.body}');
       Map data = jsonDecode(response.body);
       List newsTempList = [];
@@ -47,9 +47,7 @@ class NewsAPiServices {
 
   static Future<List<NewsModel>> getTopHeadlines() async {
     try {
-      var uri = Uri.https(BASEURL, "v2/top-headlines", {
-        'country': 'us',
-      });
+      var uri = Uri.https(BASEURL, "v2/top-headlines", {'country': 'us'});
       var response = await http.get(
         uri,
         headers: {"X-Api-key": API_KEY},
@@ -85,7 +83,7 @@ class NewsAPiServices {
         uri,
         headers: {"X-Api-key": API_KEY},
       );
-      log('Response status: ${response.statusCode}');
+      // log('Response status: ${response.statusCode}');
       // log('Response body: ${response.body}');
       Map data = jsonDecode(response.body);
       List newsTempList = [];
