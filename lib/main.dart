@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
           create: (_) => NewsProvider(),
         ),
         ChangeNotifierProvider(
-          create: (_) => BookMarkesProvider(),
+          create: (_) => BookmarksProvider(),
         ),
       ],
       child:

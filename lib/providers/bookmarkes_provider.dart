@@ -1,25 +1,29 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
-import 'package:news_app_api_cubit/consts/api_consts.dart';
-import 'package:news_app_api_cubit/models/bookmarks_model.dart';
+import 'package:flutter/cupertino.dart';
+
+import '../consts/api_consts.dart';
+
 import 'package:http/http.dart' as http;
 
-class BookMarkesProvider with ChangeNotifier {
+import '../models/bookmarks_model.dart';
+import '../models/news_model.dart';
+
+class BookmarksProvider with ChangeNotifier {
   List<BookmarksModel> bookmarkList = [];
 
-  List<BookmarksModel> get getbookmarkList {
+  List<BookmarksModel> get getBookmarkList {
     return bookmarkList;
   }
 
-  Future<void> addToBookmark() async {
+  Future<void> addToBookmark({required NewsModel newsModel}) async {
     try {
-      var uri = Uri.https(BASEURL_FIRBASE, "bookmarks.json");
-      var response = await http.post(
-        uri,
-        body: json.encode({'Test': 'Anytest'}),
-      );
+      var uri = Uri.https(BASEURL_FIREBASE, "bookmarks.json");
+      var response = await http.post(uri,
+          body: json.encode(
+            newsModel.toJson(),
+          ));
       log('Response status: ${response.statusCode}');
       log('Response body: ${response.body}');
     } catch (error) {

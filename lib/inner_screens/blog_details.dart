@@ -25,7 +25,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
   Widget build(BuildContext context) {
     final color = Utils(context).getColor;
     final newsProvider = Provider.of<NewsProvider>(context);
-    final bookMarkesProvider = Provider.of<BookMarkesProvider>(context);
+    final bookmarksProvider = Provider.of<BookmarksProvider>(context);
     final publishedAt = ModalRoute.of(context)!.settings.arguments as String;
     final currentNews = newsProvider.findByDate(publishedAt: publishedAt);
     return Scaffold(
@@ -127,7 +127,8 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          await bookMarkesProvider.addToBookmark();
+                          await bookmarksProvider.addToBookmark(
+                              newsModel: currentNews);
                         },
                         child: Card(
                           elevation: 10,
