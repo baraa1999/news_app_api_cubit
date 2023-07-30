@@ -21,6 +21,7 @@ class NewsDetailsScreen extends StatefulWidget {
 }
 
 class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
+  final bool isInBookmark = false;
   @override
   Widget build(BuildContext context) {
     final color = Utils(context).getColor;
@@ -127,8 +128,13 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          await bookmarksProvider.addToBookmark(
-                              newsModel: currentNews);
+                          if (!isInBookmark) {
+                            await bookmarksProvider.deleteBookmark();
+                          } else {
+                            await bookmarksProvider.addToBookmark(
+                              newsModel: currentNews,
+                            );
+                          }
                         },
                         child: Card(
                           elevation: 10,

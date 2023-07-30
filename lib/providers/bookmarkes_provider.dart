@@ -30,4 +30,16 @@ class BookmarksProvider with ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<void> deleteBookmark() async {
+    try {
+      var uri =
+          Uri.https(BASEURL_FIREBASE, "bookmarks/-Na_xbzZHjpKQOQHXCGr.json");
+      var response = await http.delete(uri);
+      log('Response status: ${response.statusCode}');
+      log('Response body: ${response.body}');
+    } catch (error) {
+      rethrow;
+    }
+  }
 }
