@@ -1,5 +1,6 @@
 //Packages
 import 'package:flutter/material.dart';
+import 'package:news_app_api_cubit/providers/bookmarkes_provider.dart';
 import 'package:news_app_api_cubit/providers/news_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +51,10 @@ class _MyAppState extends State<MyApp> {
         }),
         ChangeNotifierProvider(
           create: (_) => NewsProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => BookMarkesProvider(),
+        ),
       ],
       child:
           //Notify about theme changes
