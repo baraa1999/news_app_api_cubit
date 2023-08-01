@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
 class BookmarksModel with ChangeNotifier {
@@ -33,7 +32,7 @@ class BookmarksModel with ChangeNotifier {
   factory BookmarksModel.fromJson(
       {required dynamic json, required bookmarkKey}) {
     return BookmarksModel(
-      bookmarkKey: bookmarkKey,
+      bookmarkKey: bookmarkKey as String,
       newsId: json['newsId'] ?? "",
       sourceName: json['sourceName'] ?? "",
       authorName: json['authorName'] ?? "",
@@ -52,7 +51,7 @@ class BookmarksModel with ChangeNotifier {
   static List<BookmarksModel> bookmarksFromSnapshot(
       {required dynamic json, required List allKeys}) {
     return allKeys.map((key) {
-      return BookmarksModel.fromJson(json: json[allKeys], bookmarkKey: key);
+      return BookmarksModel.fromJson(json: json[key], bookmarkKey: key);
     }).toList();
   }
 

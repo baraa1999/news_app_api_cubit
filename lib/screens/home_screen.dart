@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -41,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final newsProvider = Provider.of<NewsProvider>(context);
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           iconTheme: IconThemeData(color: color),
           elevation: 0,
@@ -291,7 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Text(text),
       style: ElevatedButton.styleFrom(
           primary: Colors.blue,
-          padding: EdgeInsets.all(6),
+          padding: const EdgeInsets.all(6),
           textStyle:
               const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
     );

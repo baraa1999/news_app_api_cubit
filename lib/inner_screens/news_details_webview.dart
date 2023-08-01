@@ -1,11 +1,16 @@
 import 'dart:developer';
-
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import '../consts/styles.dart';
+import '../models/bookmarks_model.dart';
+import '../providers/bookmarks_provider.dart';
+import '../providers/news_provider.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
 import '../widgets/vertical_spacing.dart';

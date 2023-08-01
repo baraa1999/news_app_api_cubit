@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -6,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../inner_screens/bookmarks_screen.dart';
 import '../providers/theme_provider.dart';
+import '../screens/home_screen.dart';
 import 'vertical_spacing.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -53,13 +56,22 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             ListTilesWidget(
               label: "Home",
               icon: IconlyBold.home,
-              fct: () {},
+              fct: () {
+                Navigator.pushReplacement(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child: const HomeScreen(),
+                      inheritTheme: true,
+                      ctx: context),
+                );
+              },
             ),
             ListTilesWidget(
               label: "Bookmark",
               icon: IconlyBold.bookmark,
               fct: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   PageTransition(
                       type: PageTransitionType.rightToLeft,

@@ -2,11 +2,12 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:news_app_api_cubit/providers/bookmarkes_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../consts/styles.dart';
+import '../models/bookmarks_model.dart';
+import '../providers/bookmarks_provider.dart';
 import '../providers/news_provider.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
@@ -21,13 +22,34 @@ class NewsDetailsScreen extends StatefulWidget {
 }
 
 class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
-  final bool isInBookmark = false;
+  bool isInBookmark = false;
+  String? publishedAt;
+  dynamic currBookmark;
+  @override
+  void didChangeDependencies() {
+    publishedAt = ModalRoute.of(context)!.settings.arguments as String;
+    final List<BookmarksModel> bookmarkList =
+        Provider.of<BookmarksProvider>(context).getBookmarkList;
+    if (bookmarkList.isEmpty) {
+      return;
+    }
+    currBookmark = bookmarkList
+        .where((element) => element.publishedAt == publishedAt)
+        .toList();
+    if (currBookmark.isEmpty) {
+      isInBookmark = false;
+    } else {
+      isInBookmark = true;
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final color = Utils(context).getColor;
     final newsProvider = Provider.of<NewsProvider>(context);
     final bookmarksProvider = Provider.of<BookmarksProvider>(context);
-    final publishedAt = ModalRoute.of(context)!.settings.arguments as String;
+
     final currentNews = newsProvider.findByDate(publishedAt: publishedAt);
     return Scaffold(
       appBar: AppBar(
@@ -128,13 +150,15 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          if (!isInBookmark) {
-                            await bookmarksProvider.deleteBookmark();
+                          if (isInBookmark) {
+                            await bookmarksProvider.deleteBookmark(
+                                key: currBookmark[0].bookmarkKey);
                           } else {
                             await bookmarksProvider.addToBookmark(
                               newsModel: currentNews,
                             );
                           }
+                          await bookmarksProvider.fetchBookmarks();
                         },
                         child: Card(
                           elevation: 10,
@@ -142,9 +166,11 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Icon(
-                              IconlyLight.bookmark,
+                              isInBookmark
+                                  ? IconlyBold.bookmark
+                                  : IconlyLight.bookmark,
                               size: 28,
-                              color: color,
+                              color: isInBookmark ? Colors.green : color,
                             ),
                           ),
                         ),

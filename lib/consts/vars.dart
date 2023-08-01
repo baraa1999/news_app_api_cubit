@@ -1,4 +1,3 @@
-
 enum NewsType {
   topTrending,
   allNews,

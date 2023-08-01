@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:http/http.dart' as http;
-import 'package:news_app_api_cubit/models/bookmarks_model.dart';
+
 import '../consts/api_consts.dart';
 import '../consts/http_exceptions.dart';
+import '../models/bookmarks_model.dart';
 import '../models/news_model.dart';
 
 class NewsAPiServices {
@@ -104,7 +106,7 @@ class NewsAPiServices {
     }
   }
 
-  static Future<List<BookmarksModel>?> getBookmarkes() async {
+  static Future<List<BookmarksModel>?> getBookmarks() async {
     try {
       var uri = Uri.https(BASEURL_FIREBASE, "bookmarks.json");
       var response = await http.get(
@@ -112,16 +114,18 @@ class NewsAPiServices {
       );
       // log('Response status: ${response.statusCode}');
       // log('Response body: ${response.body}');
+
       Map data = jsonDecode(response.body);
       List allKeys = [];
+
       if (data['code'] != null) {
         throw HttpException(data['code']);
-        // throw data ['message'];
+        // throw data['message'];
       }
       for (String key in data.keys) {
         allKeys.add(key);
       }
-      log('all keys $allKeys');
+      log("allKeys $allKeys");
       return BookmarksModel.bookmarksFromSnapshot(json: data, allKeys: allKeys);
     } catch (error) {
       rethrow;

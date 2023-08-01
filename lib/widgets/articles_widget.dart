@@ -7,16 +7,20 @@ import 'package:provider/provider.dart';
 import '../consts/styles.dart';
 import '../inner_screens/blog_details.dart';
 import '../inner_screens/news_details_webview.dart';
+import '../models/bookmarks_model.dart';
 import '../models/news_model.dart';
 import '../services/utils.dart';
 
 class ArticlesWidget extends StatelessWidget {
-  const ArticlesWidget({Key? key}) : super(key: key);
+  const ArticlesWidget({Key? key, this.isBookmark = false}) : super(key: key);
   // final String imageUrl, title, url, dateToShow, readingTime;
+  final bool isBookmark;
   @override
   Widget build(BuildContext context) {
     Size size = Utils(context).getScreenSize;
-    final newsModelProvider = Provider.of<NewsModel>(context);
+    dynamic newsModelProvider = isBookmark
+        ? Provider.of<BookmarksModel>(context)
+        : Provider.of<NewsModel>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(

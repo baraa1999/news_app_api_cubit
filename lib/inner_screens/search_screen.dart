@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
@@ -74,9 +76,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     textInputAction: TextInputAction.search,
                     keyboardType: TextInputType.text,
                     onEditingComplete: () async {
-                      searchList = (await newsProvider.searchNewsProvider(
-                              query: _searchTextController.text))
-                          .cast<NewsModel>();
+                      searchList = await newsProvider.searchNewsProvider(
+                          query: _searchTextController.text);
                       isSearching = true;
                       focusNode.unfocus();
                       setState(() {});
@@ -124,9 +125,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () async {
-                          searchList = (await newsProvider.searchNewsProvider(
-                                  query: _searchTextController.text))
-                              .cast<NewsModel>();
+                          searchList = await newsProvider.searchNewsProvider(
+                              query: _searchTextController.text);
                           isSearching = true;
                           focusNode.unfocus();
                           _searchTextController.text = searchKeywords[index];
